@@ -1,0 +1,23 @@
+<script setup lang="ts">
+</script>
+
+<template>
+  <div class="main">
+    <slot></slot>
+  </div>
+</template>
+
+<style scoped>
+.main {
+    width: 80%;
+    max-width: 1200px;
+    min-width: 768px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 10px;
+    min-height: 60vh;
+    justify-content: center;
+}
+</style>
