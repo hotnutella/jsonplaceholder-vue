@@ -7,7 +7,7 @@
       v-model="value"
       @keydown.enter="handleSave"
       @keydown.escape="handleCancel"
-      @blur="handleCancel"
+      @blur="handleBlur"
     />
     <span v-else @click="handleEdit">{{ value }}</span>
   </div>
@@ -44,10 +44,14 @@ export default {
       value.value = props.modelValue
     }
 
+    const handleBlur = () => {
+      isEditing.value = false
+    }
+
     onMounted(() => {
       nextTick(() => {
         if (isEditing.value && inputRef.value) {
-          ;(inputRef.value as HTMLInputElement).focus()
+          (inputRef.value as HTMLInputElement).focus()
         }
       })
     })
@@ -58,14 +62,15 @@ export default {
       inputField: inputRef,
       handleEdit,
       handleSave,
-      handleCancel
+      handleCancel,
+      handleBlur
     }
   },
   watch: {
     isEditing(newValue) {
       if (newValue) {
         this.$nextTick(() => {
-          ;(this.$refs.inputRef as HTMLInputElement).focus()
+          (this.$refs.inputRef as HTMLInputElement).focus()
         })
       }
     }
