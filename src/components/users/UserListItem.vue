@@ -1,31 +1,44 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-import { RouterLink } from 'vue-router';
 
-interface User {
+export interface User {
     id: number,
     name: string
 }
 
-const props = defineProps({
-    user: Object as () => User
-});
-
 </script>
 
 <template>
-    <div class="item">
+    <div class="item" @click="openDetail">
         <div>
-            <RouterLink :to="{ name: 'detail', params: { id: props.user?.id.toString() } }">
-                {{ props.user?.name }}
-            </RouterLink>
+            {{ user?.name }}
         </div>
         <div class="delete">
-            <a href="#">Delete</a>
+            <a href="#" @click="deleteItem">Delete</a>
         </div>
     </div>
     
 </template>
+
+<script lang="ts">
+export default {
+    name: 'UserListItem',
+    props: {
+        user: {
+            type: Object as () => User,
+            required: true
+        }
+    },
+    methods: {
+        openDetail() {
+            this.$router.push({ name: 'detail', params: { id: this.user.id.toString() } });
+        },
+        deleteItem(e: Event) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }
+}
+</script>
 
 <style scoped>
 .item {

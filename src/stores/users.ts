@@ -12,7 +12,6 @@ export const useUsersStore = defineStore('users', {
         loading: false,
         error: null,
     }),
-
     actions: {},
     getters: {
         async latestUsers(): Promise<UsersState['users']> {
@@ -21,12 +20,15 @@ export const useUsersStore = defineStore('users', {
                 const response = await fetch('https://jsonplaceholder.typicode.com/users');
                 const users = await response.json();
                 this.users = users;
-                this.loading = false;
             } catch (error) {
                 this.error = error;
+            } finally {
                 this.loading = false;
             }
             return this.users;
-        }
+        },
+        userById: (state) => {
+            return (id: number) => state.users.find((user) => user.id === id); 
+        },
     },
 });
